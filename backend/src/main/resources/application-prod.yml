@@ -1,0 +1,27 @@
+# Production profile - uses Supabase PostgreSQL + Upstash Redis
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://aws-1-ap-south-1.pooler.supabase.com:5432/postgres?sslmode=require}
+    username: ${DATABASE_USERNAME:postgres.jcocujuujnnoqrkkvejm}
+    password: ${DATABASE_PASSWORD:SaviDina@025*}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: true
+
+  data:
+    redis:
+      url: ${UPSTASH_REDIS_URL:redis://localhost:6379}
+      password: ${UPSTASH_REDIS_TOKEN:}
+
+logging:
+  level:
+    com.easyread: INFO
+    org.springframework.security: WARN

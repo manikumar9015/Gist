@@ -1,0 +1,14 @@
+-- V2: Add Role to Users, and Uploader/Views to Books
+
+ALTER TABLE users 
+ADD COLUMN IF NOT EXISTS role VARCHAR(20) NOT NULL DEFAULT 'USER';
+
+ALTER TABLE books 
+ADD COLUMN IF NOT EXISTS uploader_id BIGINT;
+
+ALTER TABLE books 
+ADD COLUMN IF NOT EXISTS views INTEGER DEFAULT 0;
+
+ALTER TABLE books 
+ADD CONSTRAINT fk_books_uploader 
+FOREIGN KEY (uploader_id) REFERENCES users(id) ON DELETE SET NULL;

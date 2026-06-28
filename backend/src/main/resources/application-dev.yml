@@ -1,0 +1,39 @@
+# Dev profile - uses H2 in-memory database (no PostgreSQL required)
+spring:
+  datasource:
+    url: jdbc:h2:mem:easyreaddb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    show-sql: true
+
+  flyway:
+    enabled: false  # H2 doesn't support pgvector; use JPA auto-DDL in dev
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  # Disable Redis in dev (use in-memory caching)
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  # Disable security for h2-console
+  security:
+    headers:
+      frame-options: disable
+
+logging:
+  level:
+    com.easyread: DEBUG
+    org.springframework.security: DEBUG
